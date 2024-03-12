@@ -1,28 +1,27 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 
-const Searchbar = (props) => {
+const SearchBar = ({setSearchValue, setInput }) => {
   const [inputValue, setInputValue] = useState("");
 
   return (
     <div>
       <input
         type="text"
-        value={props.value}
         placeholder="Ingrese su busqueda"
         onChange={(e) => {
           setInputValue(e.target.value);
-          console.log("lo que tipeo antes de hacer click", inputValue);
+          setInput(e.target.value)
         }}
         onKeyUp={(e) => {
           if (e.key === "Enter") {
-            props.setSearchValue(e.target.value);
+            setSearchValue(e.target.value);
           }
         }}
       />
       <button
         onClick={() => {
-          props.setSearchValue(inputValue);
+          setSearchValue(inputValue);
         }}
       >
         Buscar
@@ -31,9 +30,9 @@ const Searchbar = (props) => {
   );
 };
 
-Searchbar.propTypes = {
-  value: PropTypes.string,
+SearchBar.propTypes = {
   setSearchValue: PropTypes.func.isRequired,
+  setInput: PropTypes.func.isRequired,
 };
 
-export default Searchbar;
+export default SearchBar;

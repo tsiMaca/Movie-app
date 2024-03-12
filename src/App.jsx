@@ -1,41 +1,42 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import Header from "./components/Header.jsx"
-import Searchbar from "./components/Searchbar.jsx";
+import SearchBar from "./components/SearchBar.jsx";
 import MovieList from "./components/MovieList.jsx";
 
 function App() {
-  // eslint-disable-next-line no-unused-vars
   const [movies, setMovies] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [input, setInput] = useState("");
 
 	const getMovieRequest = async () => {
 		const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=f2ab93fd`;
-
 		const response = await fetch(url);
 		const responseJson = await response.json();
-
 		if (responseJson.Search) {
 			setMovies(responseJson.Search);
-      console.log("se esta seteando movies?", movies);
 		}
 	};
 
-  useEffect(() => {
-    getMovieRequest()
-    if (!searchValue){setMovies([])}
-  }, [searchValue]);
+  console.log("movies2", searchValue);
+
+   useEffect(() => {
+    if(!input){
+      setMovies([])
+      setSearchValue("")
+    } else if (searchValue && searchValue.length >=4){
+      getMovieRequest()
+    }
+  }, [searchValue, input]);
 
   return (
     <>
-      <Header></Header>
-
-      <Searchbar
-        searchValue={searchValue}
+      <Header/>
+      <SearchBar
         setSearchValue={setSearchValue}
-      ></Searchbar>
-
-     <MovieList movies={movies}></MovieList>
+        setInput={setInput}
+      />
+      <MovieList movies={movies}/>
     </>
   );
 }

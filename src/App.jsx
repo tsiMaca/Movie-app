@@ -18,8 +18,6 @@ function App() {
 		}
 	};
 
-  console.log("movies2", searchValue);
-
    useEffect(() => {
     if(!input){
       setMovies([])

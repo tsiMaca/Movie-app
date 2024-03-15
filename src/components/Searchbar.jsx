@@ -1,7 +1,10 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
+import { setSearchMovie, typedInput } from "../redux/moviesSlice.js"
+import { useDispatch } from "react-redux";
 
-const SearchBar = ({setSearchValue, setInput }) => {
+const SearchBar = ({ setInput }) => {
+  const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
 
   return (
@@ -15,13 +18,13 @@ const SearchBar = ({setSearchValue, setInput }) => {
         }}
         onKeyUp={(e) => {
           if (e.key === "Enter") {
-            setSearchValue(e.target.value);
+            dispatch(setSearchMovie(e.target.value));
           }
         }}
       />
       <button
         onClick={() => {
-          setSearchValue(inputValue);
+          dispatch(setSearchMovie(inputValue));
         }}
       >
         Buscar
@@ -31,7 +34,6 @@ const SearchBar = ({setSearchValue, setInput }) => {
 };
 
 SearchBar.propTypes = {
-  setSearchValue: PropTypes.func.isRequired,
   setInput: PropTypes.func.isRequired,
 };
 

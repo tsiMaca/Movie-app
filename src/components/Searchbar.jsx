@@ -1,9 +1,8 @@
-import PropTypes from "prop-types";
 import { useState } from "react";
 import { setSearchMovie, typedInput } from "../redux/moviesSlice.js"
 import { useDispatch } from "react-redux";
 
-const SearchBar = ({ setInput }) => {
+const SearchBar = () => {
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
 
@@ -14,7 +13,7 @@ const SearchBar = ({ setInput }) => {
         placeholder="Ingrese su busqueda"
         onChange={(e) => {
           setInputValue(e.target.value);
-          setInput(e.target.value)
+         dispatch(typedInput(e.target.value))
         }}
         onKeyUp={(e) => {
           if (e.key === "Enter") {
@@ -31,10 +30,6 @@ const SearchBar = ({ setInput }) => {
       </button>
     </div>
   );
-};
-
-SearchBar.propTypes = {
-  setInput: PropTypes.func.isRequired,
 };
 
 export default SearchBar;

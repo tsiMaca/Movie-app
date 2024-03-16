@@ -2,7 +2,7 @@ import {createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
 // Define the async thunk for fetching user data
   export const fetchMovieData = createAsyncThunk('movie/fetchMovieData', async (searchMovie) => {
-    if(!!searchMovie){
+    if(searchMovie){
         const url = `http://www.omdbapi.com/?s=${searchMovie}&apikey=f2ab93fd`;
         const response = await fetch(url);
         const jsonData = await response.json();

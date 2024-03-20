@@ -1,16 +1,25 @@
 import {createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-
+import MovieService from "../services/getMovies";
 // Define the async thunk for fetching user data
-  export const fetchMovieData = createAsyncThunk('movie/fetchMovieData', async (searchMovie) => {
-    if(!!searchMovie){
-        const url = `http://www.omdbapi.com/?s=${searchMovie}&apikey=f2ab93fd`;
-        const response = await fetch(url);
-        const jsonData = await response.json();
-        return jsonData.Search;
-      
-    } else {
-        return [];
-    }
+export const fetchMovieData = createAsyncThunk('movie/fetchMovieData', async (searchMovie) => {
+  const urlParam = !!searchMovie ? searchMovie : null;
+  if (urlParam) {
+      try {
+          const response = await MovieService.get(urlParam);
+          const jsonData = response.data;
+          if (jsonData && jsonData.Search) {
+            return jsonData.Search;
+          } else {
+            console.error("Error fetching movie data: Datos no encontrados");
+            return [];
+        }
+        } catch (error) {
+            console.error("Error fetching movie data:", error);
+            return [];
+        }
+  } else {
+      return [];
+  }
 });
 
 const initialState = {

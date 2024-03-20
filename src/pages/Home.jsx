@@ -4,8 +4,6 @@ import MovieList from "../components/MovieList.jsx";
 import { useDispatch } from "react-redux";
 import { useHome } from "./useHome.jsx";
 
-const MIN_LENGTH = 4;
-
 const Home = () => {
     const dispatch = useDispatch();
     const {
